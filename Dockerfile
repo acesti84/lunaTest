@@ -1,10 +1,15 @@
 FROM ubuntu:xenial
 
+RUN apt-get update
 RUN apt-get --fix-missing update
-RUN apt-get -y install dialog apt-utils autoconf
+
+# add some packages
+RUN apt-get -y install dialog apt-utils wget
+RUN wget -qO - https://raw.githubusercontent.com/yarnpkg/releases/gh-pages/debian/pubkey.gpg | apt-key add -
 
 # enable add-apt-repository command:
 RUN apt-get -y install software-properties-common 
+RUN apt-get install -y autoconf libtool pkg-config nasm build-essential
 
 # The main PPA for supported PHP versions with many PECL extensions
 RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
